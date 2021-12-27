@@ -1,0 +1,252 @@
+\section{GoF Patterns}
+\subsection{Observer}
+Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.\\
+\includegraphics[width=\linewidth]{./img/observer.png}
+
+\subsection{Strategy}
+Define a family of algorithms, encapsulate each one, and make them interchangeable. Strategy lets the algorithm vary independently from clients that use it.\\
+\includegraphics[width=\linewidth]{./img/strategy.png}
+
+\subsection{Template Method}
+Define the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure.\\
+\includegraphics[width=\linewidth]{./img/template_method.png}
+
+\subsection{Factory Method}
+Define an interface for creating an object, but let the subclass decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.\\
+\includegraphics[width=\linewidth]{./img/factory_method.png}
+
+\subsection{Abstract Factory}
+Provide an interface for creating families of related or dependant objects without specifying their concrete classes.\\ 
+\includegraphics[width=\linewidth]{./img/abstract_factory.png}
+
+\subsection{Prototype}
+Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype.\\ 
+\includegraphics[width=\linewidth]{./img/prototype.png}
+
+\subsection{Composite}
+Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.\\ 
+\includegraphics[width=\linewidth]{./img/composite.png}
+
+
+\subsection{Decorator}
+Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.\\ 
+\includegraphics[width=\linewidth]{./img/decorator.png}
+
+\subsection{Adapter}
+Convert the interface of a class into another interface clients expect. Adapter lets classes work together that couldn't otherwise because of incompatible interfaces.\\ 
+\includegraphics[width=\linewidth]{./img/adapter.png}
+
+\subsection{Proxy}
+Provide a surrogate or placeholder for another object to control access to it.\\ 
+\includegraphics[width=\linewidth]{./img/proxy.png}
+
+\subsection{Facade}
+Provide a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.\\ 
+\includegraphics[width=\linewidth]{./img/facade.png}
+
+\subsection{Mediator}
+\subsubsection{Problem}
+\begin{itemize}
+    \item Object Structures may result in many connections between objects
+    \item In the worst case, every object ends up knowing about every other
+\end{itemize}
+\textbf{Intent:}
+\begin{itemize}
+    \item How can strong coupling between multiple objects be avoided and communication simplified?
+\end{itemize}
+\subsubsection{Solution}
+Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and lets you vary their interaction independently.\\ 
+\textbf{Mediator:} Encapsulates how a set of objects interact\\ 
+\textbf{Colleaues:} Refer to Mediator; this promotes loose coupling\\ 
+\textbf{Static Structure:}\\
+\includegraphics[width=\linewidth]{./img/mediator_static.png}
+\textbf{Dynamics:}\\ 
+\includegraphics[width=\linewidth]{./img/mediator_dynamic.png}
+\subsubsection{Implementation}
+\begin{itemize}
+    \item Mediator as an Observer
+    \item Colleagues act as Subject
+\end{itemize}
+\textbf{Known Uses:}
+\begin{itemize}
+    \item Message Bus Systems
+    \item Redux Dispatcher
+\end{itemize}
+\subsubsection{Summary}
+\textbf{Benefits:}
+\begin{itemize}
+    \item Colleague classes may become more reusable, low coupling
+    \item Centralizes control of communication between objects
+    \item Encapsulates protocols
+\end{itemize}
+\textbf{Liabilities:}
+\begin{itemize}
+    \item Adds complexity
+    \item Single point of failure
+    \item Limits subclassing (of mediator class)
+    \item May result in hard maintainable monoliths
+\end{itemize}
+
+\subsection{Memento}
+\subsubsection{Problem}
+\begin{itemize}
+    \item Sometimes it's necessary to record the internal state of an object
+    \item Objects normally encapsulate their state, making it inaccessible
+\end{itemize}
+\textbf{Intent:}
+\begin{itemize}
+    \item How can the state of an object be externalized without violating its encapsulation?
+\end{itemize}
+\subsubsection{Solution}
+Without violating encapsulation, capture and externalize an objects internal state so that the object can be restored to this state later.\\
+\includegraphics[width=\linewidth]{./img/memento.png}
+\textbf{Dynamics:}\\ 
+\includegraphics[width=0.7\linewidth]{./img/memento_dynamic.png}
+
+\subsubsection{Participants}
+\textbf{Memento}
+\begin{itemize}
+    \item Stores some / all the internal state of the Originator
+    \item Allows only the originator to access its internal information
+\end{itemize}
+\textbf{Originator}
+\begin{itemize}
+    \item Can create Memento objects to store its internal state at strategic points
+    \item Can restore own state to what the Memento object dictates
+\end{itemize}
+\textbf{Caretaker}
+\begin{itemize}
+    \item Stores the Memento objects
+    \item Cannot explore / operate the contents 
+\end{itemize}
+\subsubsection{Implementation}
+\begin{itemize}
+    \item Originator creates memento and passes over its internal state
+    \item Can be combined with Factory Method
+    \item Declare Originator as \textit{friend} of Memento, so Originator can read out its properties
+\end{itemize}
+\subsubsection{Summary}
+\textbf{Benefits}
+\begin{itemize}
+    \item Internal State of an object can be saved and restored at any time
+    \item Encapsulation of attributes is not harmed
+    \item State of objects can be restored later
+\end{itemize}
+\textbf{Liabilities}
+\begin{itemize}
+    \item Creates a complete copy of the object every time, no diffs (memory usage)
+    \item No direct access to saved state, it must be restored first
+\end{itemize}
+
+
+\subsection{Command}
+\subsubsection{Problem}
+\begin{itemize}
+    \item Decouple the decision of what to execute from the decision of when to execute
+    \item The execution needs an additional parametrization context
+\end{itemize}
+\textbf{Intent:}
+\begin{itemize}
+    \item How can commands be encapsulated, so that they can be parameterized, scheduled, logged and/or undone?
+\end{itemize}
+\subsubsection{Solution}
+Encapsulate a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operation.\\ 
+\includegraphics[width=\linewidth]{./img/command.png}
+\textbf{Dynamics:}\\ 
+\includegraphics[width=\linewidth]{./img/command_dynamic.png}
+\subsubsection{Summary}
+\textbf{Benefits:}
+\begin{itemize}
+    \item The same command can be activated from different objects
+    \item New commands can be introduced quickly and easily
+    \item Command objects can be saved in a command history
+    \item Provides inversion of control, encourages decoupling in both time and space
+\end{itemize}
+\textbf{Liabilities:}
+\begin{itemize}
+    \item Large designs with many commands can introduce many small command classes mauling the design
+\end{itemize}
+
+\subsection{Command Processor}
+\subsubsection{Problem}
+\begin{itemize}
+    \item Common UI applications support do and multiple undo steps
+    \item Steps forward and backward are accessible in a history
+\end{itemize}
+\textbf{Intent:}
+\begin{itemize}
+    \item How could we manage command objects, so the execution is seperated from the request and the execution can be undone later?
+\end{itemize}
+\subsubsection{Solution}
+Separate the request for a service from its execution. A command processor component manages requests as separate objects, schedules their execution, and provides additional services such as the storing of request objects for later undo.\\ 
+\includegraphics[width=0.8\linewidth]{./img/command_processor.png}
+\textbf{Dynamics:}\\ 
+\includegraphics[width=\linewidth]{./img/command_processor_dynamic.png}
+\subsubsection{Participants}
+\textbf{Command Processor}
+\begin{itemize}
+    \item A Separate processor object can handle the responsibility for multiple Command objects
+\end{itemize}
+\textbf{Command}
+\begin{itemize}
+    \item A uniform interface to execute functions
+\end{itemize}
+\textbf{Controller}
+\begin{itemize}
+    \item Translates requests into commands and transfers commands to Command Processor.
+\end{itemize}
+\subsubsection{Implementation}
+\begin{itemize}
+    \item Command Processor contains a \textit{Stack} which holds the command history
+    \item Controller creates the Commands and passes them over to Command Processor
+    \item Creation of Commands may be delegated to a \textit{Simple Factory}
+\end{itemize}
+\subsubsection{Summary}
+\textbf{Benefits:}
+\begin{itemize}
+    \item Flexibility
+    \item Allows addition of services related to command execution
+    \item Enhances testability
+\end{itemize}
+\textbf{Liabilities:}
+\begin{itemize}
+    \item Efficiency loss due additional indirection
+\end{itemize}
+
+\subsection{Visitor}
+\subsubsection{Problem}
+\begin{itemize}
+    \item Operations on specific classes needs to be changed/added without needing to modify these classes
+    \item Different algorithms needed to process an object tree
+\end{itemize}
+\textbf{Intent:}
+\begin{itemize}
+    \item How can the behaviour on individual elements of a data structure be changed/replaced whout changing the elements?
+\end{itemize}
+\subsubsection{Solution}
+Represent an operation to be performed on the elements of an object structure. Visitor lets you define a new operation without changing the classes of the elements on which it operates.\\ 
+\includegraphics[width=\linewidth]{./img/visitor.png}
+\subsubsection{Implementation}
+\begin{itemize}
+    \item 2 Class Hierarchies (Elements / Visitors)
+    \item Visitors iterate though object hierarchy
+    \item Solves Double-Dispatch problem of single dispatched programming languages
+\end{itemize}
+\textbf{Patterns that combine naturally with Vistor:}
+\begin{itemize}
+    \item Composite
+    \item Interpreter
+    \item Chain of Responsibility
+\end{itemize}
+\subsubsection{Summary}
+\textbf{Benefits:}
+\begin{itemize}
+    \item Visitor makes adding new operatios easy
+    \item Separates related operations from unrelated ones
+\end{itemize}
+\textbf{Liabilities:}
+\begin{itemize}
+    \item Adding new node classes is hard
+    \item Visiting sequence fix defined within nodes
+    \item Visitor breaks logic apart
+\end{itemize}

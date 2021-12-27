@@ -1,0 +1,89 @@
+\section{Beyond GoF}
+\subsection{External Iterator}
+\subsubsection{Problem}
+\begin{itemize}
+    \item Iteration through a collection depends on the target implementation
+    \item Separate logic of iteration into an object to allow multiple iteration strategies
+\end{itemize}
+\textbf{Intent:}
+\begin{itemize}
+    \item How can strong coupling between iteration and collection be avoided, generalized and provided in a collection-optimized manner?
+\end{itemize}
+\subsubsection{Solution}
+Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation.\\ 
+\includegraphics[width=\linewidth]{./img/external_iterator.png}
+\textbf{Elementary operations of an Iterator's behaviour:}
+\begin{itemize}
+    \item Initializing an iteration \textit{new ArrayList().iterator();}
+    \item Checking a completion condition \textit{it.hasNext();}
+    \item Accessing a current target value \textit{var x = it.next();}
+    \item Moving to the next target value \textit{it.next();}
+\end{itemize}
+\subsubsection{Summary}
+\textbf{Benefits:}
+\begin{itemize}
+    \item Provides a single interface to loop though any kind of collection
+\end{itemize}
+\textbf{Liabilities:}
+\begin{itemize}
+    \item Multiple iterators may loop through a collection at the same time
+    \item Life-Cycle Management of iterator objects
+    \item Close coupling between Iterator and Collection class
+    \item Indexing might be more intuitive for programmers
+\end{itemize}
+
+\subsection{Enumeration Method}
+\subsubsection{Problem:}
+\begin{itemize}
+    \item Iteration management is performed by the collection's user
+    \item Avoid state management between collection and iteration
+\end{itemize}
+\textbf{Intent:}
+\begin{itemize}
+    \item How can a collection be iterated considering the collection state and furthermore state management be reduced?
+\end{itemize}
+\subsubsection{Solution}
+Support encapsulated iteration over a collection by placing responsibility for iteration in a method on the collection. The method takes a Command object that is applied to the elements of the collection.\\ 
+\includegraphics[width=\linewidth]{./img/enumeration_method.png}
+\subsubsection{Summary}
+Programming languages already implement Enumeration Method as their loop construct. (e.g. \textit{.forEach()})\\ 
+\textbf{Benefits:}
+\begin{itemize}
+    \item Client is not responsible for loop housekeeping details
+    \item Synchronization can be provided at the level of the whole traversal rather than for each element access
+\end{itemize}
+\textbf{Liabilities:}
+\begin{itemize}
+    \item Functional approach, more complex syntax needed
+    \item Often considered too abstract for programmers
+\end{itemize}
+
+\subsection{Batch Method}
+\subsubsection{Problem}
+\begin{itemize}
+    \item Collection and client (iterator user) are not on the same machine
+    \item Operation invocations are no longer trivial
+\end{itemize}
+\textbf{Intent:}
+\begin{itemize}
+    \item How can a collection be iterated over multiple tiers without spending far more time in communication than in computation?
+\end{itemize}
+\subsubsection{Solution}
+Group multiple collection accesses together to reduce the cost of multiple individual accesses in a distributed environment.
+\begin{itemize}
+    \item Define a data structure which groups interface calls on client side
+    \item Provide an interface on servant to access groups of elements at once
+\end{itemize}
+
+\subsection{Objects for State}
+\subsubsection{Problem}
+\begin{itemize}
+    \item Object's behaviour depends on its state, and it must change its behaviour at run-time
+    \item Operations have large, multipart conditional statements (Flags) that depend on the state
+\end{itemize}
+\textbf{Intent:}
+\begin{itemize}
+    \item How can an object act according to its state without multipart conditional statements?
+\end{itemize}
+\subsubsection{Solution}
+Allow an object to alter its behaviour when its internal state changes. The object will appear to change its class.
