@@ -86,4 +86,71 @@ Group multiple collection accesses together to reduce the cost of multiple indiv
     \item How can an object act according to its state without multipart conditional statements?
 \end{itemize}
 \subsubsection{Solution}
-Allow an object to alter its behaviour when its internal state changes. The object will appear to change its class.
+Allow an object to alter its behaviour when its internal state changes. The object will appear to change its class.\\ 
+\includegraphics[width=\linewidth]{./img/objects_for_state.png}
+\textbf{Dynamic:}\\
+\includegraphics[width=\linewidth]{./img/objects_for_state_dynamic.png}
+\subsubsection{Summary}
+\textbf{Criticism:}
+\begin{itemize}
+    \item Complex, but does not adequately cover that complexity
+    \item Overkill in many cases
+    \item Name suggests problem domain rather than the solution
+\end{itemize}
+
+\subsection{Methods for State}
+\subsubsection{Solution}
+\begin{itemize}
+    \item Each state represents a table or record of method references
+    \item The methods reference lie on the State Machine (context) object
+\end{itemize}
+\includegraphics[width=\linewidth]{./img/method_for_state.png}
+\textbf{Dynamics:}\\ 
+\includegraphics[width=\linewidth]{./img/method_for_state_dynamic.png}
+\subsubsection{Summary}
+\textbf{Benefits}
+\begin{itemize}
+    \item Allows classes to express different behaviours in ordinary methods themself
+    \item Behaviour coupled to the state machine, not scattered accross small classes
+    \item Each distinct behaviour is assigned its own method
+    \item No object context needs to be passed around, methods can already access the internal stte of the State Machine
+\end{itemize}
+\textbf{Liabilities}
+\begin{itemize}
+    \item Requires an additional two levels of indirection to resolve a method call
+    \item The state machine may end up far longer than was intended or is manageable
+\end{itemize}
+
+\subsection{Collection for State}
+\subsubsection{Solution}
+\includegraphics[width=\linewidth]{./img/collection_for_state.png}
+\textbf{Dynamics:}\\ 
+\includegraphics[width=\linewidth]{./img/collection_for_state_dynamic.png}
+\subsubsection{Summary}
+\textbf{Benefits:}
+\begin{itemize}
+    \item No need to create a class per state
+    \item Optimized for multiple objects (state machines) in a state
+    \item Object's collection implicitly determines its state
+    \item Can be compined with other state machine (Objects / Methods)
+\end{itemize}
+\textbf{Liabilities:}
+\begin{itemize}
+    \item Can lead to a more complex state manager
+\end{itemize}
+
+\subsection{Implementation of State Patterns}
+\textbf{Objects:} 
+\begin{itemize}
+    \item Results in a lot of classes and structures
+    \item At least one class per state plus state machine
+\end{itemize}
+\textbf{Methods:}
+\begin{itemize}
+    \item Propagates a single class with a lot of methods
+\end{itemize}
+\textbf{Collection:}
+\begin{itemize}
+    \item Allows to manage multiple state machines with the same logic
+    \item Splits logic and transaction management into two classes
+\end{itemize}
