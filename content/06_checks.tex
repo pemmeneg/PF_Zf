@@ -1,1 +1,165 @@
 \section{Checks}
+\begin{itemize}
+    \item Separate good input from bad
+    \item Information integrity checks
+    \item Applied without complicating the program
+\end{itemize}
+\includegraphics[width=\linewidth]{./img/checks_overview.png}
+
+\subsection{Exceptional Behaviour}
+\subsubsection{Problem}
+\begin{itemize}
+    \item Missing or incorrect values in a domain model are impossible to avoid
+    \item The domain logic should be able to handle this sort of missing data
+    \item How can exceptional behaviour caused by invalid input be handled without throwing errors?
+\end{itemize}
+\subsubsection{Solution}
+Use one or more distinguished values to represent exceptional circumstances.
+\begin{itemize}
+    \item Invalid parametrized domain calls may produce Exceptional Values
+    \item Domai logic may accept Exceptional Value as legal input
+\end{itemize}
+\begin{lstlisting}
+// TypeScript
+public div(num: number, div: number): number | CalcError {
+    div === 0 ? CalcError.DivByZero : num / div;
+}
+\end{lstlisting}
+
+\subsection{Meaningless Behaviour}
+\subsubsection{Problem}
+\begin{itemize}
+    \item Due to error handling, domain logic may be expressed with more complexity than originally conceived
+    \item How can exceptional behaviour due to invalid input be handled without throwing errors?
+\end{itemize}
+\subsubsection{Solution}
+Write methods with minimalistic concern for possible failure.
+\begin{itemize}
+    \item Initiate computation
+    \item If it fails:
+    \begin{itemize}
+        \item recover from failure and continue processing
+        \item ensure the error is logged/visualized on surface
+    \end{itemize}
+    \item Choose meaningless behaviour unless a condition has domain meaning 
+    \item Represents an alternative implementation of Exceptional Value
+\end{itemize}
+\begin{lstlisting}
+// TypeScript
+public div(num: number, div: number): number {
+    return num / div; // Infinity (Java NaN) if div == 0
+}
+\end{lstlisting}
+
+\section{Framework Introduction}
+\textbf{Why Frameworks}
+\begin{itemize}
+    \item Avoid re-inventing the wheel
+    \item It is easy but inefficient to program the same thing again and again
+\end{itemize}
+\textbf{What is a Framework}
+\begin{itemize}
+    \item Object-Oriented classes that work together
+    \item Framework provides \textit{hooks} for extension
+    \item In contrast to a library, a framework keeps the control flow, not your extension
+    \item Inversion of control via callbacks
+\end{itemize}
+\textbf{Framework Callbacks}
+\begin{itemize}
+    \item Hollywood Principle: Don't call us, we call you!
+    \item Extendability and configurability
+\end{itemize}
+\subsection{Application Framework}
+\begin{itemize}
+    \item Object-oriented class library
+    \item \textit{Main()} program lives in the Application Framework
+    \item Provides \textit{hooks} and \textit{callbacks}
+    \item Provides ready-made classes for use
+    \item Creates product families
+    \item Reuse of application architecture and infrastructure
+\end{itemize}
+\subsection{Examples}
+\textbf{Frameworks}
+\begin{itemize}
+    \item .NET Core
+    \item Entity Framework
+    \item React (lib)
+    \item Vue
+\end{itemize}
+\textbf{Application Framework}
+\begin{itemize}
+    \item Spring
+    \item ASP.NET
+    \item Angular
+\end{itemize}
+
+\subsection{Difference: Library / Framework / App Framework}
+\textbf{Library}
+\begin{itemize}
+    \item Contain 3rd party Features which do not control the app flow (e.g. Math Library)
+\end{itemize}
+\textbf{Framework}
+\begin{itemize}
+    \item Provide Hooks / Extension points
+    \item Strogly rely on Inversion of Control (IoC)
+    \item Defines when hooks are called, thus controlls part of the app flow
+\end{itemize}
+\textbf{App Framework}
+\begin{itemize}
+    \item Contains the \textit{main()} procedure
+    \item Completely controlls the app flow
+\end{itemize}
+
+\subsection{Summary}
+\textbf{Benefits}
+\begin{itemize}
+    \item Less code to write
+    \item Reliable and robust code
+    \item Consistent and modular code
+    \item Reusability
+    \item Maintenance
+\end{itemize}
+\textbf{Liabilities}
+\begin{itemize}
+    \item Portability: Code is strongly coupled to the overlying Framework 
+    \item Testing: Close coupling between framework parts
+    \item Evolution: User's implemetation may break due next Framework version
+\end{itemize}
+
+\subsection{Hook / Extension Point / Control Flow}
+\subsubsection{Template Method}
+\includegraphics[width=\linewidth]{./img/template_method_example.png}
+\subsubsection{Strategy}
+\includegraphics[width=\linewidth]{./img/strategy_example.png}
+\subsubsection{Command Processor}
+\includegraphics[width=\linewidth]{./img/command_processor_example.png}
+\subsubsection{Flyweight}
+\includegraphics[width=\linewidth]{./img/flyweight_hooks.png}
+
+
+
+\section{Meta Frameworks}
+A Framework for Evaluating Software Technology
+\begin{itemize}
+    \item Initial acquisition cost
+    \item Long-term effect
+    \item Training and support
+    \item Future technoloy plans
+    \item Response of direct competitor organizations
+\end{itemize}
+
+\subsection{Framework Evaluation Phases}
+\includegraphics[width=\linewidth]{./img/framework_eval.png}
+
+\section{Developing Frameworks}
+\begin{itemize}
+    \item Frameworks need evolutionary improvements
+\end{itemize}
+\subsubsection{Frameworkers Dilemma}
+\textbf{Potential ways out of the dilemma}
+\begin{enumerate}
+    \item Think very hard up-front
+    \item Don't care too much about framework users
+    \item Let framework users participate
+    \item Use helping technology
+\end{enumerate}

@@ -211,3 +211,57 @@ public final class Year {
     private Year(int value) { this.value = value; }
 }
 \end{lstlisting}
+
+\subsection{Mutable Companion}
+\subsubsection{Problem}
+\begin{itemize}
+    \item We need to calculate with alues \textit{e.g. 15 working days after exam}
+    \item How can you simplify complex construction of an immutable value?
+\end{itemize}
+\subsubsection{Solution}
+Implement a companion class that supports modifier methods and acts as a factory for immutable Value Objects.
+\begin{itemize}
+    \item Factory Object for immutable values
+    \item Neither a subtype nor a supertype of the Immutable Value
+\end{itemize}
+\begin{lstlisting}
+public final class YearCompanion {
+    private int value;
+    public YearCompanion(Year toModify) { this.value = toModify.getValue(); }
+    /* modifying methods */
+    public Year asValue() { /* Factory Method */
+        return Year.of(value);
+    }
+}
+\end{lstlisting}
+
+\subsection{Relative Values}
+\subsubsection{Problem}
+\begin{itemize}
+    \item Value Objects are compared by their state, not their identity
+    \item Relative comparison between Value Objects for appropriate values should be provided
+    \item How can a Value Obejct be compared against others in a typed way?
+\end{itemize}
+\subsubsection{Solution}
+Implement the responsibility for comparison between Value Objects by deriving from \textit{Comparable} interface.
+\begin{itemize}
+    \item Override-Overload Method Pair: (\textit{compareTo(T other)} and \textit{equals(T other)})
+    \item Bridge Method: Provide a Method for \textit{equals(Object other)} and forward it to \textit{equals(T other)}
+    \item 
+\end{itemize}
+
+\subsection{Discussion}
+\textbf{Difference between Whole Value and Immutable Value}
+\begin{itemize}
+    \item Whole: Value with a unit should be encapsulated in a class
+    \item Immutable: Value within an object must be immutable
+\end{itemize}
+\textbf{When would you prefer Class Factory Method over a conversion constructor?}
+\begin{itemize}
+    \item Factory: A foreign value type should be converted into the current value format
+    \item Contructor: A more generic type should be converted into the current type
+\end{itemize}
+\textbf{What are the most important liabilities of the Mutable Value concept?}
+\begin{itemize}
+    \item Concept of Cloning / Copied Value may be missed by the programmer which results in to hard to find errors
+\end{itemize}
